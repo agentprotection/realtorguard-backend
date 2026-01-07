@@ -1,5 +1,4 @@
-import express from "express";
-
+const express = require("express");
 const router = express.Router();
 
 // POST /api/auth/signup
@@ -14,7 +13,6 @@ router.post("/signup", async (req, res) => {
       });
     }
 
-    // Temporary success response (DB comes later)
     return res.status(201).json({
       success: true,
       message: "Account created successfully",
@@ -24,7 +22,8 @@ router.post("/signup", async (req, res) => {
         role,
       },
     });
-  } catch (error) {
+  } catch (err) {
+    console.error("Signup error:", err);
     return res.status(500).json({
       success: false,
       message: "Signup failed",
@@ -32,4 +31,4 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
