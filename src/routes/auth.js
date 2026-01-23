@@ -3,7 +3,7 @@ const router = express.Router();
 
 /**
  * POST /api/auth/signup
- * MOCK SIGNUP – TEMPORARY
+ * MOCK SIGNUP (agent or observer)
  */
 router.post("/signup", async (req, res) => {
   try {
@@ -16,13 +16,21 @@ router.post("/signup", async (req, res) => {
       });
     }
 
-    return res.status(201).json({
+    if (!["agent", "observer"].includes(role)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid role",
+      });
+    }
+
+    return res.json({
       success: true,
-      message: "Account created successfully (mock)",
+      token: "mock-jwt-token",
       user: {
         name,
         email,
         role,
+        status: role === "observer" ? "pending" : "active",
       },
     });
   } catch (err) {
@@ -36,27 +44,33 @@ router.post("/signup", async (req, res) => {
 
 /**
  * POST /api/auth/login
- * MOCK LOGIN – TEMPORARY
+ * MOCK LOGIN (agent + observer)
  */
 router.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
-    if (!email || !password) {
+    if (!email || !password || !role) {
       return res.status(400).json({
         success: false,
-        message: "Email and password required",
+        message: "Email, password, and role are required",
       });
     }
 
-    // ✅ MOCK AUTH — accept ANY credentials
-    return res.status(200).json({
+    if (!["agent", "observer"].includes(role)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid role",
+      });
+    }
+
+    return res.json({
       success: true,
-      message: "Login successful (mock)",
       token: "mock-jwt-token",
       user: {
         email,
-        role: "agent",
+        role,
+        status: role === "observer" ? "pending" : "active",
       },
     });
   } catch (err) {
