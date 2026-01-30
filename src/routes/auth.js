@@ -48,14 +48,28 @@ router.post("/signup", async (req, res) => {
  */
 router.post("/login", async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+   const { email, password } = req.body;
+const role = req.body.role || "agent";
 
-    if (!email || !password || !role) {
-      return res.status(400).json({
-        success: false,
-        message: "Email, password, and role are required",
-      });
-    }
+if (!email || !password) {
+  return res.status(400).json({
+    success: false,
+    message: "Email and password are required",
+  });
+}
+const { email, password } = req.body;
+const role = req.body.role || "agent";
+
+
+ 
+
+
+if (!email || !password) {
+  return res.status(400).json({
+    success: false,
+    message: "Email and password are required",
+  });
+}
 
     if (!["agent", "observer"].includes(role)) {
       return res.status(400).json({
