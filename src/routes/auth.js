@@ -51,25 +51,6 @@ router.post("/login", async (req, res) => {
    const { email, password } = req.body;
 const role = req.body.role || "agent";
 
-if (!email || !password) {
-  return res.status(400).json({
-    success: false,
-    message: "Email and password are required",
-  });
-}
-let { email, password } = req.body;
-const role = req.body.role || "agent";
-
-
- 
-
-
-if (!email || !password) {
-  return res.status(400).json({
-    success: false,
-    message: "Email and password are required",
-  });
-}
 
     if (!["agent", "observer"].includes(role)) {
       return res.status(400).json({
