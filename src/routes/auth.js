@@ -57,7 +57,7 @@ if (!email || !password) {
     message: "Email and password are required",
   });
 }
-const { email, password } = req.body;
+let { email, password } = req.body;
 const role = req.body.role || "agent";
 
 
