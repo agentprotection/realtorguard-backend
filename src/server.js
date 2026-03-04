@@ -7,14 +7,15 @@ const authRoute = require("./routes/auth");
 
 const app = express();
 
-// Middleware
+
 app.use(cors({
   origin: [
-    "https://agentprotection.github.io",
-    "http://localhost:5500",
-    "http://127.0.0.1:5500"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+ 
+  "https://agentprotection.github.io",
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
+  "https://realtorguard-frontend-production.up.railway.app"
+],  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
 }));
 
